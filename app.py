@@ -26,7 +26,7 @@ def require_login():
 
 @app.get("/health")
 def health():
-    return jsonify(status="ok")
+    return jsonify(status="ok", version="1.1")
 
 
 @app.get("/products/<int:product_id>")
