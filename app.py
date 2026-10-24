@@ -40,7 +40,7 @@ def product(product_id):
 @app.get("/products/search")
 def search_products():
     q = request.args.get("q", "")
-    rows = db().execute("SELECT id, name, price FROM products WHERE name LIKE '%" + q + "%'").fetchall()
+    rows = db().execute("SELECT id, name, price FROM products WHERE name LIKE ?", (f"%{q}%",)).fetchall()
     return jsonify([dict(r) for r in rows])
 
 
