@@ -37,5 +37,16 @@ def product(product_id):
     return jsonify(dict(row))
 
 
+@app.get("/products/search")
+def search_products():
+    q = request.args.get("q", "")
+    rows = db().execute("SELECT id, name, price FROM products WHERE name LIKE ?", (f"%{q}%",)).fetchall()
+    return jsonify([dict(r) for r in rows])
+
+
+from orders import orders  # noqa: E402
+
+app.register_blueprint(orders)
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
